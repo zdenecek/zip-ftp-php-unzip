@@ -63,6 +63,7 @@ runs:
         EOF
 
     - name: Install FTP client (lftp)
+      shell: bash
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
