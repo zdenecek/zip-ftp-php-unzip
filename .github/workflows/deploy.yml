@@ -1,3 +1,4 @@
+
 name: FTP Deploy + Auto‑Unzip
 
 on:
@@ -5,11 +6,17 @@ on:
 
 jobs:
   ftp_deploy:
-    uses: ./.github/actions/ftp-deploy
-    with:
-      zip_source:     'demo-data/'
-      ftp_host:       ${{ secrets.FTP_HOST }}
-      ftp_user:       ${{ secrets.FTP_USER }}
-      ftp_password:   ${{ secrets.FTP_PASSWORD }}
-      ftp_remote_path: '/uploads/test'
-      php_script_url: 'https://static.bridge.cz/uploads/test/'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Deploy via FTP & Unzip
+        uses: ./.github/actions/ftp-deploy
+        with:
+          zip_source:     'demo-data/'
+          ftp_host:       ${{ secrets.FTP_HOST }}
+          ftp_user:       ${{ secrets.FTP_USER }}
+          ftp_password:   ${{ secrets.FTP_PASSWORD }}
+          ftp_remote_path: '/uploads/test'
+          php_script_url: 'https://static.bridge.cz/uploads/test/'
