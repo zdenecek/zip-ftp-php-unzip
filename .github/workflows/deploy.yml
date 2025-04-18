@@ -11,5 +11,5 @@ jobs:
       ftp_host:       ${{ secrets.FTP_HOST }}
       ftp_user:       ${{ secrets.FTP_USER }}
       ftp_password:   ${{ secrets.FTP_PASSWORD }}
-      ftp_remote_path:'/uploads/test'
+      ftp_remote_path: '/uploads/test'
       php_script_url: 'https://static.bridge.cz/uploads/test/'
