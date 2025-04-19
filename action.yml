@@ -30,9 +30,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
-
     - name: Generate PHP unzip script
       shell: bash
       run: |
@@ -104,10 +101,11 @@ runs:
       shell: bash
       env:
         ZIP_NAME: ${{ steps.zip.outputs.ZIP_NAME }}
+        PHP_URL: ${{ inputs.php_script_url }}
       run: |
         curl -X POST \
              -d "file=$ZIP_NAME" \
-             "${{ inputs.php_script_url }}/unzip-${{ github.run_id }}.php"
+            "${PHP_URL%/}/unzip-${{ github.run_id }}.php"
 
     - name: Delete remnants via FTP
       shell: bash
