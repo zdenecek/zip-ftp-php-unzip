@@ -69,30 +69,18 @@ runs:
         sudo apt-get update
         sudo apt-get install -y lftp zip
 
-    - name: Upload PHP unzip script via FTP
-      shell: bash
-      env:
-        FTP_HOST:     ${{ inputs.ftp_host }}
-        FTP_USER:     ${{ inputs.ftp_user }}
-        FTP_PASSWORD: ${{ inputs.ftp_password }}
-        FTP_REMOTE:   ${{ inputs.ftp_remote_path }}
-      run: |
-        lftp -e "\
-          open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; \
-          mkdir -p $FTP_REMOTE; \
-          cd $FTP_REMOTE; \
-          put unzip-${{ github.run_id }}.php; \
-          bye"
+
 
     - name: Zip files
       id: zip
       shell: bash
       run: |
         ZIP_NAME=deploy-${{ github.run_id }}.zip
-        zip -r "$ZIP_NAME" ${{ inputs.zip_source }}
+        cd $(dirname "${{ inputs.zip_source }}")
+        zip -r "$GITHUB_WORKSPACE/$ZIP_NAME" $(basename "${{ inputs.zip_source }}")
         echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_OUTPUT
 
-    - name: Upload ZIP via FTP
+    - name: Upload files via FTP
       shell: bash
       env:
         FTP_HOST:     ${{ inputs.ftp_host }}
@@ -103,7 +91,9 @@ runs:
       run: |
         lftp -e "\
           open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; \
+          mkdir -p $FTP_REMOTE; \
           cd $FTP_REMOTE; \
+          put unzip-${{ github.run_id }}.php; \
           put $ZIP_NAME; \
           bye"
 
