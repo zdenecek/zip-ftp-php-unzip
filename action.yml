@@ -1,4 +1,4 @@
-name: 'FTP Deploy & Remote Unzip' 
+name: 'FTP Deploy & Remote PHP Unzip' 
 description: >
   Zip, upload via FTP, unzip via PHP script triggered by HTTP. 
   Upload to PHP webhostings.
