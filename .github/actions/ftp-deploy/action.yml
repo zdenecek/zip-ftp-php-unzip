@@ -89,7 +89,7 @@ runs:
       shell: bash
       run: |
         ZIP_NAME=deploy-${{ github.run_id }}.zip
-        zip -r "$ZIP_NAME" "${{ inputs.zip_source }}"
+        zip -r "$ZIP_NAME" ${{ inputs.zip_source }}
         echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_OUTPUT
 
     - name: Upload ZIP via FTP
@@ -124,9 +124,3 @@ runs:
         FTP_PASSWORD: ${{ inputs.ftp_password }}
         FTP_REMOTE:   ${{ inputs.ftp_remote_path }}
       run: |
-        lftp -e "\
-          open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; \
-          cd $FTP_REMOTE; \
-          rm unzip-${{ github.run_id }}.php; \
-          rm $ZIP_NAME; \
-          bye"
