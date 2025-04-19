@@ -1,7 +1,7 @@
 name: 'FTP Deploy & Remote Unzip' 
 description: >
-  Zips a specified path, uploads it via FTP (along with a built‑in
-  PHP unzip script), then triggers that script to extract your ZIP.
+  Zip, upload via FTP, unzip via PHP script triggered by HTTP. 
+  Upload to PHP webhostings.
 inputs:
   zip_source:
     description: 'Path (file or directory) to zip'
