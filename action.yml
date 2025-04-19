@@ -114,6 +114,7 @@ runs:
         FTP_USER:     ${{ inputs.ftp_user }}
         FTP_PASSWORD: ${{ inputs.ftp_password }}
         FTP_REMOTE:   ${{ inputs.ftp_remote_path }}
+        ZIP_NAME:     ${{ steps.zip.outputs.ZIP_NAME }}
       run: |
         lftp -e "\
           open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; \
