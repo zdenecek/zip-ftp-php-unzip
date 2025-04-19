@@ -1,5 +1,4 @@
-# .github/actions/ftp-deploy/action.yml
-name: 'FTP Deploy & Remote Unzip'
+name: 'FTP Deploy & Remote Unzip' 
 description: >
   Zips a specified path, uploads it via FTP (along with a built‑in
   PHP unzip script), then triggers that script to extract your ZIP.
@@ -75,7 +74,7 @@ runs:
       id: zip
       shell: bash
       run: |
-        ZIP_NAME=deploy-${{ github.run_id }}.zip
+        ZIP_NAME=zip-upload-${{ github.run_id }}.zip
         cd $(dirname "${{ inputs.zip_source }}")
         zip -r "$GITHUB_WORKSPACE/$ZIP_NAME" $(basename "${{ inputs.zip_source }}")
         echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_OUTPUT
@@ -114,3 +113,9 @@ runs:
         FTP_PASSWORD: ${{ inputs.ftp_password }}
         FTP_REMOTE:   ${{ inputs.ftp_remote_path }}
       run: |
+        lftp -e "\
+          open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; \
+          cd $FTP_REMOTE; \
+          rm unzip-${{ github.run_id }}.php; \
+          rm $ZIP_NAME; \
+          bye"
