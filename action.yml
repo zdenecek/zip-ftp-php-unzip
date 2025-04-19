@@ -2,6 +2,10 @@ name: 'FTP Deploy & Remote Unzip'
 description: >
   Zip, upload via FTP, unzip via PHP script triggered by HTTP. 
   Upload to PHP webhostings.
+branding:
+  icon: 'upload'
+  color: 'blue'
+
 inputs:
   zip_source:
     description: 'Path (file or directory) to zip'
